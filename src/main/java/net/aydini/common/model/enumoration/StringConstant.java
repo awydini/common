@@ -1,4 +1,4 @@
-package net.aydini.common.util.constant;
+package net.aydini.common.model.enumoration;
 
 public enum StringConstant
 {

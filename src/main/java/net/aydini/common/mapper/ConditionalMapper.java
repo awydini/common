@@ -1,4 +1,4 @@
-package net.aydini.common.util.mapper;
+package net.aydini.common.mapper;
 /**
  * 
  * @Author <a href="mailto:paakro@gmail.com">Aydin Nasrollahpour </a>

@@ -1,14 +1,14 @@
-package net.aydini.common.util.mapper;
+package net.aydini.common.mapper;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Set;
 
-import net.aydini.common.util.exception.MapperException;
-import net.aydini.common.util.reflection.FieldWarehouse;
+import net.aydini.common.exception.MapperException;
 import net.aydini.common.util.reflection.ReflectionUtil;
-import net.aydini.common.util.reflection.annotation.Mappable;
-import net.aydini.common.util.reflection.annotation.MappedField;
+import net.aydini.common.util.reflection.FieldWarehouse;
+import net.aydini.common.model.annotation.Mappable;
+import net.aydini.common.model.annotation.MappedField;
 
 /**
  * 

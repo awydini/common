@@ -1,8 +1,7 @@
-package net.aydini.common.util.io;
-
-import org.junit.Test;
+package net.aydini.common.io;
 
 import net.aydini.common.util.string.Base64Converter;
+import org.junit.Test;
 
 import static org.junit.Assert.*;
 

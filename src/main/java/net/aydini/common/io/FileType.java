@@ -1,4 +1,4 @@
-package net.aydini.common.util.io;
+package net.aydini.common.io;
 
 /**
  * 

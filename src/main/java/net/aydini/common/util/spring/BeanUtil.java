@@ -1,7 +1,6 @@
 package net.aydini.common.util.spring;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import net.aydini.common.util.string.Stringutil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
@@ -13,27 +12,37 @@ import org.springframework.stereotype.Component;
  */
 
 @Component
-public class BeanUtil 
+public class BeanUtil
 {
-    @Autowired
-    private ConfigurableApplicationContext applicationContext;
+
+    private ConfigurableApplicationContext configurableApplicationContext;
+
+    public BeanUtil(ConfigurableApplicationContext configurableApplicationContext)
+    {
+        this.configurableApplicationContext=configurableApplicationContext;
+    }
     
 
     public ApplicationContext getApplicationContext()
     {
-        return applicationContext;
+        return configurableApplicationContext;
     }
     
     
     public boolean isPrototypeComponent(Class<?> clazz)
     {
-        String[] beanNames = applicationContext.getBeanNamesForType(clazz);
-        if (beanNames == null || beanNames.length == 0) return false;
-
-        return applicationContext.getBeanFactory().getBeanDefinition(beanNames[0]).getScope()
-                .equals(ConfigurableBeanFactory.SCOPE_PROTOTYPE);
+        return configurableApplicationContext.isPrototype(getBeanNameByClass(clazz));
     }
-    
-    
+
+    public boolean isSingletonComponent(Class<?> clazz)
+    {
+        return configurableApplicationContext.isSingleton(getBeanNameByClass(clazz));
+    }
+
+
+    private String getBeanNameByClass(Class<?> clazz)
+    {
+        return Stringutil.toLowerFirstLetter(clazz.getSimpleName());
+    }
 
 }

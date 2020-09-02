@@ -1,4 +1,4 @@
-package net.aydini.common.util.reflection;
+package net.aydini.common.model.enumoration;
 
 import java.math.BigDecimal;
 

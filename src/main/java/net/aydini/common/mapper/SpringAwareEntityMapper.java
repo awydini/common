@@ -1,8 +1,8 @@
-package net.aydini.common.util.mapper;
-
-import org.springframework.beans.factory.annotation.Autowired;
+package net.aydini.common.mapper;
 
 import net.aydini.common.util.spring.BeanUtil;
+
+import org.springframework.stereotype.Component;
 
 /**
  * 
@@ -10,11 +10,16 @@ import net.aydini.common.util.spring.BeanUtil;
  *
  *         Jul 9, 2020
  */
+@Component
 public final class SpringAwareEntityMapper extends AbstractEntityMapper
 {
+    private final BeanUtil beanUtil;
 
-    @Autowired
-    private BeanUtil beanUtil;
+    public SpringAwareEntityMapper(BeanUtil beanUtil)
+    {
+        this.beanUtil=beanUtil;
+    }
+
 
     @Override
     protected <I> Mapper<I, ?> getMapper(Class<? extends Mapper<I, ?>> clazz) throws IllegalAccessException, InstantiationException

@@ -1,4 +1,4 @@
-package net.aydini.common.util.reflection.annotation;
+package net.aydini.common.model.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

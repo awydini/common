@@ -1,4 +1,4 @@
-package net.aydini.common.util.exception;
+package net.aydini.common.exception;
 /**
  * 
  * @Author <a href="mailto:paakro@gmail.com">Aydin Nasrollahpour </a>

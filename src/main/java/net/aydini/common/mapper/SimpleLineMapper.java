@@ -1,4 +1,4 @@
-package net.aydini.common.util.mapper;
+package net.aydini.common.mapper;
 
 import net.aydini.common.util.string.SimpleTokenizer;
 
