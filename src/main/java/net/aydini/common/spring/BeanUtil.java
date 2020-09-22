@@ -1,9 +1,9 @@
-package net.aydini.common.util.spring;
+package net.aydini.common.spring;
 
-import net.aydini.common.util.string.Stringutil;
+import net.aydini.common.string.Stringutil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Component;
+
 /**
  * 
  * @Author <a href="mailto:paakro@gmail.com">Aydin Nasrollahpour </a>
@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
  * Jul 9, 2020
  */
 
-@Component
 public class BeanUtil
 {
 

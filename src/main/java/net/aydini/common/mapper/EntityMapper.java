@@ -11,6 +11,16 @@ package net.aydini.common.mapper;
 public final class EntityMapper extends AbstractEntityMapper
 {
 
+    private EntityMapper(){}
+    private static  EntityMapper entityMapper;
+
+    public static EntityMapper getInstance()
+    {
+        if(entityMapper == null)
+            entityMapper = new EntityMapper();
+        return entityMapper;
+    }
+
     @Override
     protected <I> Mapper<I, ?> getMapper(Class<? extends Mapper<I, ?>> clazz) throws IllegalAccessException, InstantiationException
     {

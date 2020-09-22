@@ -1,4 +1,4 @@
-package net.aydini.common.util.string;
+package net.aydini.common.string;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -20,7 +20,8 @@ public class Stringutil
     }
 
 
-    public static String toLowerFirstLetter(String string)
+    public static String
+    toLowerFirstLetter(String string)
     {
         if(StringUtils.isEmpty(string))
             throw new NullPointerException("empty string");

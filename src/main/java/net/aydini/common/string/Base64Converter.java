@@ -1,4 +1,4 @@
-package net.aydini.common.util.string;
+package net.aydini.common.string;
 
 import java.nio.charset.StandardCharsets;
 

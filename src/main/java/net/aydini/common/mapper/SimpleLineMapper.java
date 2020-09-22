@@ -1,6 +1,6 @@
 package net.aydini.common.mapper;
 
-import net.aydini.common.util.string.SimpleTokenizer;
+import net.aydini.common.string.SimpleTokenizer;
 
 /**
  * 

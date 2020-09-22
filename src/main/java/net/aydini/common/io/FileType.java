@@ -11,13 +11,13 @@ public enum FileType {
     JPG(".jpg"),PNG(".png"),GIF(".gif"),TXT(".txt"),CSV(".csv"),PDF(".pdf");
     
 
-    private String extention;
-    FileType(String extention)
+    private final String extension;
+    FileType(String extension)
     {
-        this.extention=extention;
+        this.extension=extension;
     }
-    public String getExtention()
+    public String getExtension()
     {
-        return extention;
+        return extension;
     }
 }

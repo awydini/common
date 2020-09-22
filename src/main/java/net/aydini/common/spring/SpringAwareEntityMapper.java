@@ -1,8 +1,9 @@
-package net.aydini.common.mapper;
+package net.aydini.common.spring;
 
-import net.aydini.common.util.spring.BeanUtil;
-
-import org.springframework.stereotype.Component;
+import net.aydini.common.mapper.AbstractEntityMapper;
+import net.aydini.common.mapper.AbstractMapper;
+import net.aydini.common.mapper.Mapper;
+import net.aydini.common.mapper.MappingMode;
 
 /**
  * 
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
  *
  *         Jul 9, 2020
  */
-@Component
+
 public final class SpringAwareEntityMapper extends AbstractEntityMapper
 {
     private final BeanUtil beanUtil;

@@ -1,13 +1,13 @@
-package net.aydini.common.util.reflection;
+package net.aydini.common.reflection;
 
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.*;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ClassUtils;
@@ -20,6 +20,13 @@ import org.apache.commons.lang.ClassUtils;
  */
 public class ReflectionUtil
 {
+
+    private final static List<Class> SIMPLE_TYPE_LIST;
+
+    static
+    {
+        SIMPLE_TYPE_LIST = Arrays.asList(new Class[]{Byte.class,Short.class,Integer.class,Float.class,Double.class,Boolean.class,Long.class, BigDecimal.class, BigInteger.class,String.class,java.util.Date.class,java.sql.Date.class});
+    }
 
     public static Set<Field> getClassFields(Class<?> clazz)
     {
@@ -176,6 +183,11 @@ public class ReflectionUtil
     public static boolean hasSuperClass(Class<?> clazz)
     {
         return !getSuperClass(clazz).equals(Object.class);
+    }
+
+    public static boolean isSimpleType(Class<?> clazz)
+    {
+        return SIMPLE_TYPE_LIST.contains(clazz);
     }
 
 }

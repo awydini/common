@@ -1,4 +1,4 @@
-package net.aydini.common.util.string;
+package net.aydini.common.string;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

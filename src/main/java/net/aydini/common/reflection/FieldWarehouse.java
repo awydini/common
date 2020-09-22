@@ -1,4 +1,4 @@
-package net.aydini.common.util.reflection;
+package net.aydini.common.reflection;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

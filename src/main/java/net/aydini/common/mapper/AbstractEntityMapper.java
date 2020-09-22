@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.Set;
 
 import net.aydini.common.exception.MapperException;
-import net.aydini.common.util.reflection.ReflectionUtil;
-import net.aydini.common.util.reflection.FieldWarehouse;
+import net.aydini.common.reflection.ReflectionUtil;
+import net.aydini.common.reflection.FieldWarehouse;
 import net.aydini.common.model.annotation.Mappable;
 import net.aydini.common.model.annotation.MappedField;
 
@@ -103,7 +103,7 @@ public abstract class AbstractEntityMapper
     private Object getTargetFieldValue(Object source, Field targetField)
     {
         Object targetFieldValue = null;
-        if (ReflectionUtil.hasSuperClass((targetField.getType())) && source != null)
+        if (ReflectionUtil.isSimpleType((targetField.getType())) && source != null)
             targetFieldValue = mapCompositeField(source, targetField.getType());
         else targetFieldValue = source;
         return targetFieldValue;
