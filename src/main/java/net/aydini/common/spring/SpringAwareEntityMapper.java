@@ -14,6 +14,9 @@ import net.aydini.common.mapper.MappingMode;
 
 public final class SpringAwareEntityMapper extends AbstractEntityMapper
 {
+
+    private final static Logger logger = Logger.getLogger(SpringAwareEntityMapper.class);
+ 
     private final BeanUtil beanUtil;
 
     public SpringAwareEntityMapper(BeanUtil beanUtil)
@@ -25,7 +28,17 @@ public final class SpringAwareEntityMapper extends AbstractEntityMapper
     @Override
     protected <I> Mapper<I, ?> getMapper(Class<? extends Mapper<I, ?>> clazz) throws IllegalAccessException, InstantiationException
     {
-        return beanUtil.getApplicationContext().getBean(clazz);
+        try 
+        {
+            return configurableApplicationContext.getBean(clazz);
+        }
+        catch(NoSuchBeanDefinitionException e)
+        {
+            logger.debug(ReflectionUtil.getBeanNameByClass(clazz) + " not found  ");
+            logger.warn("trying to instantiate " + clazz.getSimpleName() + " out of spring context ");
+        }
+        return clazz.newInstance();
+        
     }
 
     @Override
