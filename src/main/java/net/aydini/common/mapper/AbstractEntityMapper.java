@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Set;
 
 import net.aydini.common.exception.MapperException;
+import net.aydini.common.mapper.cast.Castable;
+import net.aydini.common.mapper.cast.DefaultCastClass;
 import net.aydini.common.reflection.ReflectionUtil;
 import net.aydini.common.reflection.FieldWarehouse;
 import net.aydini.common.model.annotation.Mappable;
@@ -18,6 +20,7 @@ import net.aydini.common.model.annotation.MappedField;
  */
 public abstract class AbstractEntityMapper
 {
+
     public <T, S> T map(S source, Class<T> targetClass)
     {
         return map(source, targetClass, null);
@@ -34,6 +37,29 @@ public abstract class AbstractEntityMapper
         {
             if (mapperObjectHolder.getSourceClass().isAnnotationPresent(Mappable.class)) mapAnnotatedFieldsOnly(mapperObjectHolder);
             else mapAllFields(mapperObjectHolder);
+            return mapperObjectHolder.getTarget();
+        }
+        catch (Exception e)
+        {
+            throw new MapperException(e);
+        }
+    }
+
+    public <T, S, M> T simpleMap(S source, Class<T> targetClass)
+    {
+        return simpleMap(new MapperObjectHolder<S, T, M>(source, targetClass, null));
+    }
+
+
+    private <T, S, M> T simpleMap(MapperObjectHolder<S, T, M> mapperObjectHolder)
+    {
+        try
+        {
+            Set<Field> targetFields = FieldWarehouse.getClassFields(mapperObjectHolder.getTargetClass());
+            for (Field field : targetFields)
+            {
+                setNotAnnotatedFieldValueToObject(mapperObjectHolder, field);
+            }
             return mapperObjectHolder.getTarget();
         }
         catch (Exception e)
@@ -73,7 +99,8 @@ public abstract class AbstractEntityMapper
         }
         catch (Exception e)
         {
-            throw new MapperException(e);
+            String errorMessage = field.getName() + " of type " + objectHolder.getTargetClass().getSimpleName() + " cant be mapped to " + field.getName() + "of type " +  objectHolder.getSourceClass().getSimpleName();
+            throw new MapperException(errorMessage,e);
         }
     }
 
@@ -92,11 +119,14 @@ public abstract class AbstractEntityMapper
                 value = getTargetFieldValue(sourceValue, annotatedField);
             }
             if (value == null) value = mappedField.ifNullValue().getValue();
+            if(value!= null && !mappedField.castTo().equals(DefaultCastClass.class))
+                value = cast(mappedField.castTo(),value);
             ReflectionUtil.setFieldValueToObject(annotatedField, objectHolder.getTarget(), value);
         }
         catch (Exception e)
         {
-            throw new MapperException(e);
+            String errorMessage = "error mapping " + annotatedField.getName() + " of type " + objectHolder.getTargetClass().getSimpleName() + ": " + e.getMessage();
+            throw new MapperException(errorMessage,e);
         }
     }
 
@@ -156,6 +186,16 @@ public abstract class AbstractEntityMapper
     private boolean isAbstractMapper(Class<?> clazz)
     {
         return Arrays.asList(clazz.getClasses()).contains(AbstractMapper.class);
+    }
+
+    private Object cast(Class<? extends Castable> castClass,Object value)
+    {
+        try {
+            return castClass.newInstance().cast(value);
+        } catch (Exception e) {
+            String message = "error casting " + value + " to " +castClass.getSimpleName();
+            throw new ClassCastException(message);
+        }
     }
 
 }

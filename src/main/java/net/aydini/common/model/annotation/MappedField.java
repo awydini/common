@@ -6,6 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import net.aydini.common.mapper.Mapper;
+import net.aydini.common.mapper.cast.Castable;
+import net.aydini.common.mapper.cast.DefaultCastClass;
 import net.aydini.common.model.enumoration.IfNullValue;
 
 /**
@@ -26,4 +28,6 @@ public @interface MappedField {
     Class<? extends Mapper> mapperClass() default Mapper.class;
 
     IfNullValue ifNullValue() default IfNullValue.NULL;
+
+    Class<? extends Castable> castTo() default DefaultCastClass.class;
 }
