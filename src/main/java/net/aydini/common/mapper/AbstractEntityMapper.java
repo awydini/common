@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import net.aydini.common.exception.MapperException;
@@ -74,7 +75,7 @@ public abstract class AbstractEntityMapper
         }
     }
 
-    private <T, S, M> void setNotAnnotatedFieldValueToObject(MapperObjectHolder<S, T, M> objectHolder, Field field)
+    protected <T, S, M> void setNotAnnotatedFieldValueToObject(MapperObjectHolder<S, T, M> objectHolder, Field field)
     {
         try
         {
@@ -90,7 +91,7 @@ public abstract class AbstractEntityMapper
         }
     }
 
-    private <T, S, M> void setAnnotatedFieldValueToObject(MapperObjectHolder<S, T, M> objectHolder, Field annotatedField)
+    protected  <T, S, M> void setAnnotatedFieldValueToObject(MapperObjectHolder<S, T, M> objectHolder, Field annotatedField)
     {
         try
         {
@@ -98,7 +99,8 @@ public abstract class AbstractEntityMapper
 
             Field sourceField = ReflectionUtil.findClassFieldByFieldName(objectHolder.getSourceClass(), mappedField.fieldName());
             Object value = null;
-            if (mappedField.isCustom()) value = convertValue((Class<Mapper<S, ?>>) mappedField.mapperClass(), objectHolder.getSource(),objectHolder.getMappingMode());
+            if (mappedField.isCustom())
+                value = convertValue((Class<Mapper<S, ?>>) mappedField.mapperClass(), objectHolder.getSource(),objectHolder.getMappingMode());
             else if (sourceField != null)
             {
                 Object sourceValue = ReflectionUtil.getFieldValueFromObject(sourceField, objectHolder.getSource());
