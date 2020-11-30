@@ -4,14 +4,15 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import net.aydini.common.exception.MapperException;
+import net.aydini.common.model.annotation.IgnoreMapper;
 import net.aydini.common.reflection.ReflectionUtil;
 import net.aydini.common.reflection.FieldWarehouse;
 import net.aydini.common.model.annotation.Mappable;
 import net.aydini.common.model.annotation.MappedField;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +22,9 @@ import net.aydini.common.model.annotation.MappedField;
  */
 public abstract class AbstractEntityMapper
 {
+    private final static Logger logger = Logger.getLogger(AbstractEntityMapper.class);
+
+
     public <T, S> T map(S source, Class<T> targetClass)
     {
         return map(source, targetClass, null);
@@ -46,19 +50,20 @@ public abstract class AbstractEntityMapper
     {
         try
         {
+            if(mapperObjectHolder.getSourceClass().isAnnotationPresent(IgnoreMapper.class)) return null;
             if (mapperObjectHolder.getSourceClass().isAnnotationPresent(Mappable.class)) mapAnnotatedFieldsOnly(mapperObjectHolder);
             else mapAllFields(mapperObjectHolder);
             return mapperObjectHolder.getTarget();
         }
         catch (Exception e)
         {
-            throw new MapperException(e);
+            throw new MapperException(e.getMessage(),e);
         }
     }
 
     private <T, S, M> void mapAllFields(MapperObjectHolder<S, T, M> objectHolder)
     {
-        Set<Field> targetFields = FieldWarehouse.getClassFields(objectHolder.getTargetClass());
+        Set<Field> targetFields = FieldWarehouse.getClassFields(objectHolder.getTargetClass()).stream().filter(item->item.isAnnotationPresent(IgnoreMapper.class)).collect(Collectors.toSet());
         for (Field field : targetFields)
         {
             if (field.isAnnotationPresent(MappedField.class)) setAnnotatedFieldValueToObject(objectHolder, field);
@@ -87,7 +92,11 @@ public abstract class AbstractEntityMapper
         }
         catch (Exception e)
         {
-            throw new MapperException(e);
+            String errorMessage= field.getName() + " of type  " + objectHolder.getTargetClass().getSimpleName() + "cant be mapped to  " + field.getName() + " of type " + objectHolder.getSourceClass().getSimpleName() + "\n"+e.getMessage();
+            logger.error(errorMessage);
+            if(objectHolder.isIgnoreError())
+                return;
+            throw new MapperException(errorMessage,e);
         }
     }
 
@@ -115,14 +124,16 @@ public abstract class AbstractEntityMapper
         }
         catch (Exception e)
         {
-            throw new MapperException(e);
+            String errorMessage= "error mapping  " + annotatedField.getName() + " of type  " + objectHolder.getTargetClass().getSimpleName() + "\n " + e.getMessage();
+            logger.error(errorMessage);
+            throw new MapperException(errorMessage,e);
         }
     }
 
     private Object getTargetFieldValue(Object source, Field targetField)
     {
         Object targetFieldValue = null;
-        if (ReflectionUtil.isSimpleType((targetField.getType())) && source != null)
+        if (source != null && ReflectionUtil.isSimpleType((targetField.getType())) &&!source.getClass().equals(targetField.getType()) )
             targetFieldValue = mapCompositeField(source, targetField.getType());
         else targetFieldValue = source;
         return targetFieldValue;
@@ -135,11 +146,20 @@ public abstract class AbstractEntityMapper
 
     private <T, S, M, O> Object convertValue(Class<? extends Mapper<S, ?>> clazz,S source ,MappingMode<M> mappingMode)
     {
-        if (!isMapper(clazz)) throw new MapperException("converter class should implment " + Mapper.class.getName());
-        if (isConditionalMapper(clazz)) return ((ConditionalMapper<S, ?, M>) getConverterClass(clazz, mappingMode))
-                .map(source, mappingMode);
+        try
+        {
+            if (!isMapper(clazz)) throw new MapperException("converter class should implment " + Mapper.class.getName());
+            if (isConditionalMapper(clazz)) return ((ConditionalMapper<S, ?, M>) getConverterClass(clazz, mappingMode))
+                    .map(source, mappingMode);
 
-        return getConverterClass(clazz, mappingMode).map(source);
+            return getConverterClass(clazz, mappingMode).map(source);
+        }
+        catch (Exception e)
+        {
+            String errorMessage= "error mapping  " + source + " with " + clazz.getSimpleName() + "\n " + e.getMessage();
+            logger.error(errorMessage);
+            throw new MapperException(errorMessage,e);
+        }
     }
 
     private <I, M> Mapper<I, ?> getConverterClass(Class<? extends Mapper<I, ?>> clazz, MappingMode<M> mappingMode)
@@ -151,7 +171,9 @@ public abstract class AbstractEntityMapper
         }
         catch (IllegalAccessException | InstantiationException e)
         {
-            throw new MapperException("error creating bean " + clazz.getName(), e);
+            String errorMessage= "error creating bean " + clazz.getName() + " \n" +e.getMessage();
+            logger.error(errorMessage);
+            throw new MapperException(errorMessage, e);
         }
     }
 

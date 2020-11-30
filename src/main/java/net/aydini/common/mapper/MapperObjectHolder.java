@@ -17,6 +17,8 @@ public class MapperObjectHolder<S,T,M> {
 
     private MappingMode<M> mappingMode;
 
+    private boolean ignoreError =false;
+
     public S getSource() {
         return source;
     }
@@ -39,6 +41,14 @@ public class MapperObjectHolder<S,T,M> {
 
     public void setTargetClass(Class<T> targetClass) {
         this.targetClass = targetClass;
+    }
+
+    public boolean isIgnoreError() {
+        return ignoreError;
+    }
+
+    public void setIgnoreError(boolean ignoreError) {
+        this.ignoreError = ignoreError;
     }
 
     public MapperObjectHolder(S source, Class<T> targetClass, MappingMode<M> mappingMode) {

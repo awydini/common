@@ -32,6 +32,7 @@ public class SimpleEntityMapper  extends AbstractEntityMapper{
     {
         try
         {
+            objectHolder.setIgnoreError(true);
             Set<Field> targetFields = FieldWarehouse.getClassFields(objectHolder.getTargetClass());
             for (Field field : targetFields)
             {

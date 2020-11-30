@@ -6,14 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 
- * @Author <a href="mailto:paakro@gmail.com">Aydin Nasrollahpour </a>
- *
+ * @Author <a href="mailto:hi@aydini.net">Aydin Nasrollahpour </a>
+ * <p>
  * Jul 9, 2020
  */
-@Target(ElementType.TYPE)
+
+@Target({ElementType.ANNOTATION_TYPE,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Mappable
-{
-    boolean nestedMapping() default false;
+public @interface IgnoreMapper {
 }
