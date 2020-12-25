@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * 
- * @Author <a href="mailto:paakro@gmail.com">Aydin Nasrollahpour </a>
+ * @Author  Aydin Nasrollahpour
  *
  * Jun 28, 2020
  */

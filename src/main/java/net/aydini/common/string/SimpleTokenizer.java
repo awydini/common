@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 
 /**
  * 
- * @Author <a href="mailto:paakro@gmail.com">Aydin Nasrollahpour </a>
+ * @Author  Aydin Nasrollahpour
  *
  * Jul 9, 2020
  */

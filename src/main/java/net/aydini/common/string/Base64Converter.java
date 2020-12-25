@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * 
- * @Author <a href="mailto:paakro@gmail.com">Aydin Nasrollahpour </a>
+ * @Author  Aydin Nasrollahpour
  *
  *         11:05:34 AM
  */

@@ -2,7 +2,7 @@ package net.aydini.common.io;
 
 /**
  * 
- * @Author <a href="mailto:paakro@gmail.com">Aydin Nasrollahpour </a>
+ * @Author  Aydin Nasrollahpour
  *
  *         11:06:47 AM
  */

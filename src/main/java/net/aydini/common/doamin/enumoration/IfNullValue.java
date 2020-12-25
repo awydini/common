@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 /**
  * 
- * @Author <a href="mailto:paakro@gmail.com">Aydin Nasrollahpour </a>
+ * @Author  Aydin Nasrollahpour
  *
  * Jul 9, 2020
  */

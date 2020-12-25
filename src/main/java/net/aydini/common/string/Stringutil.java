@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 /**
  * 
- * @Author <a href="mailto:paakro@gmail.com">Aydin Nasrollahpour </a>
+ * @Author  Aydin Nasrollahpour
  *
  * Jul 8, 2020
  */

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  *
- * @Author <a href="mailto:paakro@gmail.com">Aydin Nasrollahpour </a>
+ * @Author  Aydin Nasrollahpour
  *
  * Sep 4, 2020
  */

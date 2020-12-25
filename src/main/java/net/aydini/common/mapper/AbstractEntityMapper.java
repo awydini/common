@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @Author <a href="mailto:paakro@gmail.com">Aydin Nasrollahpour </a>
+ * @Author  Aydin Nasrollahpour
  *
  *         Jul 9, 2020
  */
