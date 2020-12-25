@@ -21,6 +21,7 @@ import org.apache.commons.lang.ClassUtils;
 public class ReflectionUtil
 {
 
+    @SuppressWarnings("rawtypes")
     private final static List<Class> SIMPLE_TYPE_LIST;
 
     static

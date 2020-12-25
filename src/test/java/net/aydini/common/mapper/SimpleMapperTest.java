@@ -1,10 +1,10 @@
 package net.aydini.common.mapper;
 
-import net.aydini.common.model.PersonDto;
-import net.aydini.common.model.PersonModel;
+import net.aydini.common.doamin.PersonDto;
+import net.aydini.common.doamin.PersonModel;
 import static  org.junit.jupiter.api.Assertions.*;
 
-import net.aydini.common.model.UserDto;
+import net.aydini.common.doamin.UserDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

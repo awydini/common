@@ -7,11 +7,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import net.aydini.common.exception.MapperException;
-import net.aydini.common.model.annotation.IgnoreMapper;
+import net.aydini.common.doamin.annotation.IgnoreMapper;
 import net.aydini.common.reflection.ReflectionUtil;
 import net.aydini.common.reflection.FieldWarehouse;
-import net.aydini.common.model.annotation.Mappable;
-import net.aydini.common.model.annotation.MappedField;
+import net.aydini.common.doamin.annotation.Mappable;
+import net.aydini.common.doamin.annotation.MappedField;
 import org.apache.log4j.Logger;
 
 /**

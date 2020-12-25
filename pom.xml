@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.aydini</groupId>
 	<artifactId>common</artifactId>
@@ -8,7 +10,7 @@
 	<developers>
 		<developer>
 			<name>Aydin Nasrollahpour</name>
-			<email>paakro@gmail.com</email>
+			<email>hi@aydini.net</email>
 		</developer>
 	</developers>
 	<properties>
@@ -16,9 +18,39 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<junit.version>5.6.2</junit.version>
+		<prime.version>8.0</prime.version>
+		<jackson.version>2.11.4</jackson.version>
+		<spring.version>5.1.5.RELEASE</spring.version>
+		<hibernate.version>5.4.27.Final</hibernate.version>
+		<spring.data.jpa.version>2.4.2</spring.data.jpa.version>
 	</properties>
 
+
+
 	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
+		<dependency>
+			<groupId>org.primefaces</groupId>
+			<artifactId>primefaces</artifactId>
+			<version>${prime.version}</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+
 
 		<!-- https://mvnrepository.com/artifact/log4j/log4j -->
 		<dependency>
@@ -93,8 +125,41 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>5.1.5.RELEASE</version>
+			<version>${spring.version}</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-jpa -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring.data.jpa.version}</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-envers -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+
+
 
 	</dependencies>
 
@@ -157,6 +222,6 @@
 		<connection>scm:git:https://github.com/awydini/common.git</connection>
 		<url>https://github.com/awydini/common</url>
 		<developerConnection>scm:git:https://github.com/awydini/common.git</developerConnection>
-	  <tag>v0.0.1</tag>
-  </scm>
+		<tag>v0.0.1</tag>
+	</scm>
 </project>

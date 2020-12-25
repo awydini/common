@@ -1,5 +1,6 @@
 package net.aydini.common.string;
 
+import net.aydini.common.exception.ValidationException;
 import net.aydini.common.validation.Validator;
 
 import java.util.regex.Pattern;
@@ -28,7 +29,14 @@ public class EmailValidator implements Validator<String> {
     }
 
     @Override
-    public boolean isValid(String email) {
-        return emailValidator.pattern.matcher(email).matches();
+    public boolean isValid(String email) throws ValidationException {
+        try
+        {
+            return emailValidator.pattern.matcher(email).matches();
+        }
+        catch (Exception e)
+        {
+            throw new ValidationException(e.getMessage(),e);
+        }
     }
 }

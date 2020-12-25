@@ -1,8 +1,6 @@
 package net.aydini.common.mapper;
 
 import net.aydini.common.exception.MapperException;
-import net.aydini.common.model.annotation.Mappable;
-import net.aydini.common.model.annotation.MappedField;
 import net.aydini.common.reflection.FieldWarehouse;
 
 import java.lang.reflect.Field;
@@ -42,7 +40,7 @@ public class SimpleEntityMapper  extends AbstractEntityMapper{
         }
         catch (Exception e)
         {
-            throw new MapperException(e);
+            throw new MapperException(e.getMessage(),e);
         }
     }
 

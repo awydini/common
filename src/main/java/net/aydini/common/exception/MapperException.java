@@ -5,16 +5,14 @@ package net.aydini.common.exception;
  *
  * Jul 9, 2020
  */
-public class MapperException extends RuntimeException {
+public class MapperException extends ServiceException {
 
     /**
      * 
      */
     private static final long serialVersionUID = -7595048830886191432L;
 
-    public MapperException(Throwable throwable) {
-        super(throwable);
-    }
+
 
     public MapperException(String message) {
         super(message);
@@ -22,6 +20,10 @@ public class MapperException extends RuntimeException {
 
     public MapperException(String message , Throwable throwable) {
         super(message ,throwable);
+    }
+
+    public MapperException(String message,Object[] args, Throwable cause) {
+        super(message, cause,args);
     }
 
 }
