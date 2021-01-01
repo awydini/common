@@ -8,9 +8,12 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.ClassUtils;
+
+import net.aydini.common.exception.ServiceException;
 
 /**
  * 
@@ -41,18 +44,6 @@ public class ReflectionUtil
         return fields;
     }
 
-    public static Set<Field> getAnnotatedClassFields(Class<?> clazz, Class<? extends Annotation> annotation)
-    {
-        Set<Field> annotatedFields = new HashSet<Field>();
-        for (Field field : getClassFields(clazz))
-        {
-            if (field.isAnnotationPresent(annotation))
-            {
-                annotatedFields.add(field);
-            }
-        }
-        return annotatedFields;
-    }
 
     @SafeVarargs
     public static <T extends Annotation> Set<Field> getAnnotatedClassFields(Class<?> clazz, Class<T>... annotations)
@@ -60,7 +51,7 @@ public class ReflectionUtil
         Set<Field> annotatedFields = new HashSet<Field>();
         for (Class<T> annotaion : annotations)
         {
-            annotatedFields.addAll(getAnnotatedClassFields(clazz, annotaion));
+            annotatedFields.addAll(getClassFields(clazz).stream().filter(field->field.isAnnotationPresent(annotaion)).collect(Collectors.toSet()));
         }
         return annotatedFields;
     }
@@ -128,28 +119,19 @@ public class ReflectionUtil
      *            the new value for the field of {@code targetObject} being
      *            modified
      *
-     * @exception IllegalAccessException
-     *                if this {@code Field} object is enforcing Java language
-     *                access control and the underlying field is either
-     *                inaccessible or final.
-     * @exception IllegalArgumentException
-     *                if the specified object is not an instance of the class or
-     *                interface declaring the underlying field (or a subclass or
-     *                implementor thereof), or if an unwrapping conversion
-     *                fails.
-     * @exception NullPointerException
-     *                if the specified object is null and the field is an
-     *                instance field.
-     * @exception ExceptionInInitializerError
-     *                if the initialization provoked by this method fails.
-     *
      * @see Field#set
      */
     public static void setFieldValueToObject(Field targetField, Object targetObject, Object value)
-            throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
     {
-        Method setterMethod = findSetterMethod(targetField.getName(), targetObject);
-        if (setterMethod != null) setterMethod.invoke(targetObject, value);
+        try
+        {
+            Method setterMethod = findSetterMethod(targetField.getName(), targetObject);
+            if (setterMethod != null) setterMethod.invoke(targetObject, value);
+        }
+        catch(Exception e)
+        {
+            throw new ServiceException(e);
+        }
     }
 
     private static Method findSetterMethod(String propertyName, Object object)
@@ -190,5 +172,24 @@ public class ReflectionUtil
     {
         return SIMPLE_TYPE_LIST.contains(clazz);
     }
+    
+    
+    public static <T>  T instantiate(Class<T> clazz)
+    {
+        try
+        {
+            return clazz.newInstance();
+        }
+        catch (Exception e)
+        {
+            throw new ServiceException(e);
+        }
+    }
+    
+    public static boolean isInterface(Class<?> clazz)
+    {
+        return clazz.isInterface();
+    }
+    
 
 }
