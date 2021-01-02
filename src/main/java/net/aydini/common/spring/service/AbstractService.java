@@ -2,7 +2,6 @@ package net.aydini.common.spring.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -17,7 +16,6 @@ import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolationException;
 
 import org.apache.commons.lang.StringUtils;
-import org.primefaces.model.SortOrder;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,7 +29,6 @@ import org.springframework.util.CollectionUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.aydini.common.doamin.entity.BaseEntityModel;
-import net.aydini.common.doamin.model.SortProperty;
 import net.aydini.common.exception.ServiceException;
 import net.aydini.common.spring.dao.BaseDao;
 
@@ -61,40 +58,6 @@ public abstract class AbstractService<E extends BaseEntityModel>
         return null;
     }
 
-    protected Sort applySort(List<SortProperty> sortFields)
-    {
-        if (CollectionUtils.isEmpty(sortFields))
-        {
-            return null;
-        }
-        else
-        {
-            List<Sort.Order> orders = new ArrayList<>();
-            Iterator<SortProperty> var3 = sortFields.iterator();
-
-            while (var3.hasNext())
-            {
-                SortProperty sp = (SortProperty) var3.next();
-                if (SortOrder.ASCENDING.equals(sp.getSortOrder()))
-                {
-                    orders.add(new Sort.Order(Sort.Direction.ASC, sp.getName()));
-                }
-                else
-                {
-                    orders.add(new Sort.Order(Sort.Direction.DESC, sp.getName()));
-                }
-            }
-
-            if (CollectionUtils.isEmpty(orders))
-            {
-                return null;
-            }
-            else
-            {
-                return Sort.by(orders);
-            }
-        }
-    }
 
     @Transactional(rollbackFor = { Exception.class, ServiceException.class })
     public void insert(E entity, boolean flush) throws ServiceException
@@ -314,55 +277,6 @@ public abstract class AbstractService<E extends BaseEntityModel>
         return (Long) this.entityManager.createQuery(criteria).getSingleResult();
     }
 
-    @Transactional(readOnly = true)
-    public List<E> load(int first, int pageSize, List<SortProperty> sortFields, Map<String, Object> filters, Class<E> clz,
-            JPARestriction<E> restriction)
-    {
-        CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
-        CriteriaQuery<E> criteria = builder.createQuery(clz);
-        Root<E> root = criteria.from(clz);
-        criteria.select(root);
-        if (restriction != null)
-        {
-            Specification<E> listSpec = restriction.listSpec(builder, criteria, root);
-            if (listSpec != null)
-            {
-                Predicate predicate = listSpec.toPredicate(root, criteria, builder);
-                if (predicate != null)
-                {
-                    criteria.where(predicate);
-                }
-            }
-        }
-
-        if (!CollectionUtils.isEmpty(sortFields))
-        {
-            List<javax.persistence.criteria.Order> orderList = new ArrayList<>();
-            sortFields.forEach((item) ->
-            {
-                if (SortOrder.ASCENDING.equals(item.getSortOrder()))
-                {
-                    orderList.add(builder.asc(root.get(item.getName())));
-                }
-                else
-                {
-                    orderList.add(builder.desc(root.get(item.getName())));
-                }
-
-            });
-            criteria.orderBy(orderList);
-        }
-
-        TypedQuery<E> createQuery = this.entityManager.createQuery(criteria);
-        createQuery.setFirstResult(first);
-        if (pageSize > 0)
-        {
-            createQuery.setMaxResults(pageSize);
-        }
-
-        List<E> result = createQuery.getResultList();
-        return result;
-    }
 
     public E readForUpdate(Class<E> clz, Long id, String jsonContent)
     {
