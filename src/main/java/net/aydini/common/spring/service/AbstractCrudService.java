@@ -1,11 +1,11 @@
 package net.aydini.common.spring.service;
 
+import java.util.Date;
+
 import org.springframework.transaction.annotation.Transactional;
 
-import net.aydini.common.doamin.entity.BaseEntityModel;
+import net.aydini.common.doamin.entity.AbstractEntityModel;
 import net.aydini.common.spring.dao.BaseDao;
-
-import java.util.Date;
 
 /**
  * 
@@ -15,7 +15,7 @@ import java.util.Date;
  * @param <E>
  */
 @Transactional
-public abstract class AbstractCrudService<E extends BaseEntityModel> extends AbstractService<E> {
+public abstract class AbstractCrudService<E extends AbstractEntityModel> extends AbstractService<E> {
     public AbstractCrudService() {
     }
 

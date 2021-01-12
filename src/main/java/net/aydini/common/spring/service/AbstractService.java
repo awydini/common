@@ -28,7 +28,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import net.aydini.common.doamin.entity.BaseEntityModel;
+import net.aydini.common.doamin.entity.AbstractEntityModel;
 import net.aydini.common.exception.ServiceException;
 import net.aydini.common.spring.dao.BaseDao;
 
@@ -39,7 +39,7 @@ import net.aydini.common.spring.dao.BaseDao;
  *
  *Dec 14, 2020
  */
-public abstract class AbstractService<E extends BaseEntityModel>
+public abstract class AbstractService<E extends AbstractEntityModel>
 {
 
     @PersistenceContext(unitName = "entityManagerFactory")
