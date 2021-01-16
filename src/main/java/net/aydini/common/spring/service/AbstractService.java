@@ -191,13 +191,13 @@ public abstract class AbstractService<E extends AbstractEntityModel>
     }
 
     @Transactional(readOnly = true)
-    public Page<E> load(Pageable pageable, Class<E> clz, JPARestriction<E> restriction)
+    public Page<E> load(Pageable pageable, Class<E> clz, JPARestriction restriction)
     {
         return this.load(pageable, clz, restriction, (Sort) null);
     }
 
     @Transactional(readOnly = true)
-    public Page<E> load(Pageable pageable, Class<E> clz, JPARestriction<E> restriction, Sort sort)
+    public Page<E> load(Pageable pageable, Class<E> clz, JPARestriction restriction, Sort sort)
     {
         CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<E> criteria = builder.createQuery(clz);
@@ -255,7 +255,7 @@ public abstract class AbstractService<E extends AbstractEntityModel>
     }
 
     @Transactional(readOnly = true)
-    public Long count(Class<E> clz, JPARestriction<E> restriction)
+    public Long count(Class<E> clz, JPARestriction restriction)
     {
         CriteriaBuilder builder = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
