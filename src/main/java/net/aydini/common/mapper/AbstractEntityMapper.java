@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import net.aydini.common.exception.MapperException;
+import org.apache.log4j.Logger;
+
 import net.aydini.common.doamin.annotation.IgnoreMapper;
-import net.aydini.common.reflection.ReflectionUtil;
-import net.aydini.common.reflection.FieldWarehouse;
 import net.aydini.common.doamin.annotation.Mappable;
 import net.aydini.common.doamin.annotation.MappedField;
-import org.apache.log4j.Logger;
+import net.aydini.common.exception.MapperException;
+import net.aydini.common.reflection.FieldWarehouse;
+import net.aydini.common.reflection.ReflectionUtil;
 
 /**
  *
@@ -30,21 +31,11 @@ public abstract class AbstractEntityMapper
         return map(source, targetClass, null);
     }
 
-    public <T, S> List<T> mapList(List<S> sourceList, Class<T> targetClass)
-    {
-        return sourceList.stream().map(item->map(item,targetClass,null)).collect(Collectors.toList());
-    }
-
     public <T, S, M> T map(S source, Class<T> targetClass, MappingMode<M> mode)
     {
         return map(new MapperObjectHolder<S, T, M>(source, targetClass, mode));
     }
 
-
-    public <T, S, M> List<T> mapList(List<S> sourceList, Class<T> targetClass, MappingMode<M> mode)
-    {
-        return sourceList.stream().map(source-> map(new MapperObjectHolder<S, T, M>(source, targetClass, mode))).collect(Collectors.toList());
-    }
 
     public <T, S, M> T map(MapperObjectHolder<S, T, M> mapperObjectHolder)
     {
@@ -139,8 +130,12 @@ public abstract class AbstractEntityMapper
         return targetFieldValue;
     }
 
-    private Object mapCompositeField(Object source, Class<?> targetClass)
+    private <T,O> Object mapCompositeField(T source, Class<O> targetClass)
     {
+        if(source instanceof List)
+            return new ListMapper<T,O>(this).map((List<T>)source, targetClass);
+        else if (source instanceof Set)
+            return new SetMapper<T,O>(this).map((Set<T>)source, targetClass);
         return map(source, targetClass);
     }
 
