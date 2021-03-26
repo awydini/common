@@ -1,8 +1,6 @@
 package net.aydini.common.spring;
 
 import net.aydini.common.string.Stringutil;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * 
@@ -13,33 +11,19 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 public class BeanUtil
 {
-
-    private ConfigurableApplicationContext configurableApplicationContext;
-
-    public BeanUtil(ConfigurableApplicationContext configurableApplicationContext)
-    {
-        this.configurableApplicationContext=configurableApplicationContext;
-    }
     
-
-    public ApplicationContext getApplicationContext()
+    public static  boolean isPrototypeComponent(Class<?> clazz)
     {
-        return configurableApplicationContext;
-    }
-    
-    
-    public boolean isPrototypeComponent(Class<?> clazz)
-    {
-        return configurableApplicationContext.isPrototype(getBeanNameByClass(clazz));
+        return ApplicationContextHolder.getApplicationContext().isPrototype(getBeanNameByClass(clazz));
     }
 
-    public boolean isSingletonComponent(Class<?> clazz)
+    public static boolean isSingletonComponent(Class<?> clazz)
     {
-        return configurableApplicationContext.isSingleton(getBeanNameByClass(clazz));
+        return ApplicationContextHolder.getApplicationContext().isSingleton(getBeanNameByClass(clazz));
     }
 
 
-    private String getBeanNameByClass(Class<?> clazz)
+    private static String getBeanNameByClass(Class<?> clazz)
     {
         return Stringutil.toLowerFirstLetter(clazz.getSimpleName());
     }

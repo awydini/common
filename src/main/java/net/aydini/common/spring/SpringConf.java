@@ -1,5 +1,7 @@
 package net.aydini.common.spring;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,16 +22,16 @@ public class SpringConf {
     {
         this.configurableApplicationContext=configurableApplicationContext;
     }
-    @Bean
-    public BeanUtil beanUtil()
+    @PostConstruct
+    public void setApplicationContext()
     {
-        return new BeanUtil(configurableApplicationContext);
+        ApplicationContextHolder.setApplicationContext(configurableApplicationContext);
     }
 
     @Bean
     public SpringAwareEntityMapper springAwareEntityMapper()
     {
-        return new SpringAwareEntityMapper(beanUtil());
+        return new SpringAwareEntityMapper();
     }
 
 }
