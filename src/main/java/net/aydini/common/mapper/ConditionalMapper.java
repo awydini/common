@@ -5,6 +5,7 @@ package net.aydini.common.mapper;
  *
  * Jul 9, 2020
  */
+@Deprecated
 public interface  ConditionalMapper<I,O,M> extends Mapper<I,O>  {
 
     public O map(I i , MappingMode<M> mode);
