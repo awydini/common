@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
  *         Jul 8, 2020
  */
 
+@Deprecated
 public class SetMapper<I, O>
 {
     private final AbstractEntityMapper entityMapper;

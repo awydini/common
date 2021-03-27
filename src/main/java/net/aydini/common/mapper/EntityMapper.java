@@ -7,7 +7,7 @@ package net.aydini.common.mapper;
  * Jul 9, 2020
  */
 
-
+@Deprecated
 public final class EntityMapper extends AbstractEntityMapper
 {
 

@@ -7,6 +7,7 @@ package net.aydini.common.mapper;
  *
  * Jul 9, 2020
  */
+@Deprecated
 public abstract class AbstractMapper<I,O,M> implements Mapper<I,O>{
 
     protected MappingMode<M> mappingMode;

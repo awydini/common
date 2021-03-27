@@ -12,6 +12,7 @@ import java.util.Set;
  *
  * Nov 15, 2020
  */
+@Deprecated
 public class SimpleEntityMapper  extends AbstractEntityMapper{
 
 

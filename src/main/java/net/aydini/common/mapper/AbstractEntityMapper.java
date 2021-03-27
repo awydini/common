@@ -21,6 +21,7 @@ import net.aydini.common.reflection.ReflectionUtil;
  *
  *         Jul 9, 2020
  */
+@Deprecated
 public abstract class AbstractEntityMapper
 {
     private final static Logger logger = Logger.getLogger(AbstractEntityMapper.class);

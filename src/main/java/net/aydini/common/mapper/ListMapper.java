@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
  *
  * Mar 26, 2021
  */
+
+@Deprecated
 public class ListMapper<I,O> 
 {
 
