@@ -13,7 +13,7 @@ import net.aydini.common.mapper.MappingMode;
  *
  *         Jul 9, 2020
  */
-
+@Deprecated
 public final class SpringAwareEntityMapper extends AbstractEntityMapper
 {
 
