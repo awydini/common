@@ -11,6 +11,7 @@ import java.lang.annotation.Target;
  *
  * Jul 9, 2020
  */
+@Deprecated
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Mappable

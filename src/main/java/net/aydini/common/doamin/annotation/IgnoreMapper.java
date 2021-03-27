@@ -11,6 +11,7 @@ import java.lang.annotation.Target;
  * Jul 9, 2020
  */
 
+@Deprecated
 @Target({ElementType.ANNOTATION_TYPE,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface IgnoreMapper {

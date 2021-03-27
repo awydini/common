@@ -15,6 +15,7 @@ import net.aydini.common.doamin.enumoration.IfNullValue;
  * Jul 9, 2020
  */
 
+@Deprecated
 @Target({ElementType.FIELD,ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MappedField {
