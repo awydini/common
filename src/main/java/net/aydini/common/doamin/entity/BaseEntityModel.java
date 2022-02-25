@@ -5,8 +5,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.RelationTargetAuditMode;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 
@@ -29,13 +27,11 @@ public abstract class BaseEntityModel extends AbstractEntityModel
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", nullable = true)
     @CreatedBy
-    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     private AbstractUser createdBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "updated_by", nullable = true)
     @LastModifiedBy
-    @Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
     private AbstractUser updatedBy;
     
    
