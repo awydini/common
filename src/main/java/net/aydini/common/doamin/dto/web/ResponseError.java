@@ -10,6 +10,11 @@ import java.util.List;
  * 25.02.22
  */
 public class ResponseError extends ResponseMessage{
+    /**
+     *
+     */
+    private static final long serialVersionUID = -2061705289597928352L;
+
 
 
     /**
