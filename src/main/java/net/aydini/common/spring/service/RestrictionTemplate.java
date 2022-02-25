@@ -2,12 +2,12 @@ package net.aydini.common.spring.service;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import net.aydini.common.doamin.model.Filter;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
 
 /**
  * 
@@ -16,7 +16,7 @@ import javax.persistence.criteria.Root;
  *Dec 14, 2020
  * @param <T>
  */
-public abstract class RestrictionTemplate<T extends Filter > implements JPARestriction<T>{
+public abstract class RestrictionTemplate<T extends Serializable> implements JPARestriction<T>{
 
     @Override
     public <E> Specification<T> countSpec(CriteriaBuilder criteriaBuilder, CriteriaQuery<E> criteriaQuery, Root<T> root) {
