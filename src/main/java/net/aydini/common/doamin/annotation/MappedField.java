@@ -5,7 +5,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.aydini.common.mapper.Mapper;
 import net.aydini.common.doamin.enumoration.IfNullValue;
 
 /**

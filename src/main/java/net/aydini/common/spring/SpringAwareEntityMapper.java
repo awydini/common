@@ -2,11 +2,6 @@ package net.aydini.common.spring;
 
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
-import net.aydini.common.mapper.AbstractEntityMapper;
-import net.aydini.common.mapper.AbstractMapper;
-import net.aydini.common.mapper.Mapper;
-import net.aydini.common.mapper.MappingMode;
-
 /**
  * 
  * @Author  Aydin Nasrollahpour
