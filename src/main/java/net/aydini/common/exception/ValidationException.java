@@ -24,4 +24,7 @@ public class ValidationException extends ServiceException{
     public ValidationException(Throwable cause) {
         super(cause);
     }
+    public ValidationException() {
+    }
+
 }
