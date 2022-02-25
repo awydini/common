@@ -1,4 +1,5 @@
 package net.aydini.common.controller;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,7 @@ public abstract class ControllerExceptionHandler  extends ResponseEntityExceptio
     public ResponseEntity<ResponseError> handleNotFoundErro(NotFoundException ex, WebRequest request)
     {
         getLogger().error("not found error!. {} ", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).headers(extractHttpHeaders(request))
                 .body(new ResponseError(HttpStatus.NOT_FOUND.name(), HttpStatus.NOT_FOUND.value(),ex.getMessage()));
     }
 
@@ -67,7 +68,7 @@ public abstract class ControllerExceptionHandler  extends ResponseEntityExceptio
     public ResponseEntity<ResponseError> handleValidationEroor(ValidationException ex,WebRequest request)
     {
         getLogger().error("validation error!. {}", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).headers(extractHttpHeaders(request))
                 .body(new ResponseError(HttpStatus.BAD_REQUEST.name(), HttpStatus.BAD_REQUEST.value(),ex.getMessage()));
     }
 
@@ -89,7 +90,6 @@ public abstract class ControllerExceptionHandler  extends ResponseEntityExceptio
         List<String> errorList = ex.getBindingResult().getFieldErrors().stream().map(item->item.getDefaultMessage()).collect(Collectors.toList());
         getLogger().error("validation error!. {}", errorList);
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
-                
                 .headers(headers).body(new ResponseError(HttpStatus.NOT_ACCEPTABLE.name(), HttpStatus.NOT_ACCEPTABLE.value(),errorList));
     }
 
@@ -108,8 +108,7 @@ public abstract class ControllerExceptionHandler  extends ResponseEntityExceptio
     public ResponseEntity<ResponseError> handleUndefinedException(Exception ex,WebRequest request)
     {
         getLogger().error("error : {}", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).headers(extractHttpHeaders(request))
                 .body(new ResponseError(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value(),ex.getMessage()));
     }
 
@@ -129,7 +128,7 @@ public abstract class ControllerExceptionHandler  extends ResponseEntityExceptio
     public ResponseEntity<ResponseError> handleProxyException(ProxyException ex,WebRequest request)
     {
         getLogger().error("error : {}", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.valueOf(ex.getResponseError().getCode()))
+        return ResponseEntity.status(HttpStatus.valueOf(ex.getResponseError().getCode())).headers(extractHttpHeaders(request))
                 .body(new ResponseError(ex.getResponseError().getMessage(), ex.getResponseError().getCode(),ex.getResponseError().getErrors().iterator().next()));
     }
 
@@ -147,6 +146,16 @@ public abstract class ControllerExceptionHandler  extends ResponseEntityExceptio
         if (HttpStatus.INTERNAL_SERVER_ERROR.equals(status)) {
             request.setAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE, ex, WebRequest.SCOPE_REQUEST);
         }
-        return  ResponseEntity.status(status).body(new ResponseError(ex.getMessage(), status.value(),ex.getMessage()));
+        return  ResponseEntity.status(status).headers(extractHttpHeaders(request)).body(new ResponseError(ex.getMessage(), status.value(),ex.getMessage()));
+    }
+
+
+    private HttpHeaders extractHttpHeaders(WebRequest webRequest)
+    {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        if(webRequest == null || webRequest.getHeaderNames() == null)
+            return httpHeaders;
+       webRequest.getHeaderNames().forEachRemaining(headerName->httpHeaders.addAll(headerName, Arrays.asList(webRequest.getHeaderValues(headerName))));
+        return httpHeaders;
     }
 }

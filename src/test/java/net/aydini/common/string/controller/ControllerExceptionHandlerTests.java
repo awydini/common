@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.util.concurrent.CompletableFuture;
-
 import net.aydini.common.constant.Constants;
 import net.aydini.common.controller.ControllerExceptionHandler;
 import net.aydini.common.doamin.dto.web.ResponseError;
@@ -16,9 +14,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.WebRequest;
+
+import java.util.Arrays;
 
 
 /**
@@ -33,12 +34,17 @@ public class ControllerExceptionHandlerTests {
 
     private ControllerExceptionHandler controllerExceptionHandler;
 
+    private String trackCode = "213456";
+
 
     @BeforeEach
     public void init()
     {
-
-        CompletableFuture.runAsync(()-> System.out.println());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.set(Constants.TRACK_CODE_HEADER,trackCode);
+        when(webRequest.getHeader(Constants.TRACK_CODE_HEADER)).thenReturn(httpHeaders.getFirst(Constants.TRACK_CODE_HEADER));
+        when(webRequest.getHeaderNames()).thenReturn(Arrays.asList(Constants.TRACK_CODE_HEADER).iterator());
+        when(webRequest.getHeaderValues(Constants.TRACK_CODE_HEADER)).thenReturn(new String[]{trackCode});
         controllerExceptionHandler = new ControllerExceptionHandler() {
             @Override
             protected Logger getLogger() {
@@ -56,6 +62,7 @@ public class ControllerExceptionHandlerTests {
         assertNotNull(responseEntity.getBody());
         assertEquals(HttpStatus.NOT_FOUND.value(), responseEntity.getBody().getCode());
         assertEquals(HttpStatus.NOT_FOUND.name(), responseEntity.getBody().getMessage());
+        assertEquals(trackCode,responseEntity.getHeaders().getFirst(Constants.TRACK_CODE_HEADER) );
     }
 
 
@@ -68,6 +75,7 @@ public class ControllerExceptionHandlerTests {
         assertNotNull(responseEntity.getBody());
         assertEquals(HttpStatus.BAD_REQUEST.value(), responseEntity.getBody().getCode());
         assertEquals(HttpStatus.BAD_REQUEST.name(), responseEntity.getBody().getMessage());
+        assertEquals(trackCode,responseEntity.getHeaders().getFirst(Constants.TRACK_CODE_HEADER) );
     }
 
 
@@ -79,6 +87,7 @@ public class ControllerExceptionHandlerTests {
         assertNotNull(responseEntity.getBody());
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), responseEntity.getBody().getCode());
         assertEquals("Exception", responseEntity.getBody().getMessage());
+        assertEquals(trackCode,responseEntity.getHeaders().getFirst(Constants.TRACK_CODE_HEADER) );
     }
 
 
@@ -90,5 +99,6 @@ public class ControllerExceptionHandlerTests {
         assertNotNull(responseEntity.getBody());
         assertEquals(HttpStatus.GATEWAY_TIMEOUT.value(), responseEntity.getBody().getCode());
         assertEquals("error", responseEntity.getBody().getMessage());
+        assertEquals(trackCode,responseEntity.getHeaders().getFirst(Constants.TRACK_CODE_HEADER) );
     }
 }
