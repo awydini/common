@@ -1,4 +1,4 @@
-package net.aydini.common.doamin.entity;
+package net.aydini.common.doamin.entity.security;
 
 import java.util.Collection;
 import java.util.Set;
@@ -9,6 +9,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.MappedSuperclass;
 
+import net.aydini.common.doamin.entity.BaseEntityModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,7 +21,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  *Dec 25, 2020
  */
 @MappedSuperclass
-public abstract class AbstractUser extends BaseEntityModel implements UserDetails
+public abstract class SecUser extends BaseEntityModel implements UserDetails
 {
     /**
      * 
@@ -39,9 +40,9 @@ public abstract class AbstractUser extends BaseEntityModel implements UserDetail
     @Column(name = "enabled")
     private boolean enabled;
 
-    @ManyToMany(targetEntity = Role.class)
+    @ManyToMany(targetEntity = SecRole.class)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    private Set<SecRole> roles;
 
 
     @Override
@@ -118,13 +119,13 @@ public abstract class AbstractUser extends BaseEntityModel implements UserDetail
     }
 
 
-    public Set<Role> getRoles()
+    public Set<SecRole> getRoles()
     {
         return roles;
     }
 
 
-    public void setRoles(Set<Role> roles)
+    public void setRoles(Set<SecRole> roles)
     {
         this.roles = roles;
     }

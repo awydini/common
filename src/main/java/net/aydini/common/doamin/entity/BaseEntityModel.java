@@ -5,6 +5,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
+import net.aydini.common.doamin.entity.security.SecUser;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.LastModifiedBy;
 
@@ -27,34 +28,34 @@ public abstract class BaseEntityModel extends AbstractEntityModel
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "created_by", nullable = true)
     @CreatedBy
-    private AbstractUser createdBy;
+    private SecUser createdBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "updated_by", nullable = true)
     @LastModifiedBy
-    private AbstractUser updatedBy;
+    private SecUser updatedBy;
     
    
     
 
    
     
-    public AbstractUser getCreatedBy()
+    public SecUser getCreatedBy()
     {
         return createdBy;
     }
 
-    public void setCreatedBy(AbstractUser createdBy)
+    public void setCreatedBy(SecUser createdBy)
     {
         this.createdBy = createdBy;
     }
 
-    public AbstractUser getUpdatedBy()
+    public SecUser getUpdatedBy()
     {
         return updatedBy;
     }
 
-    public void setUpdatedBy(AbstractUser updatedBy)
+    public void setUpdatedBy(SecUser updatedBy)
     {
         this.updatedBy = updatedBy;
     }

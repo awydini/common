@@ -1,9 +1,10 @@
-package net.aydini.common.doamin.entity;
+package net.aydini.common.doamin.entity.security;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+import net.aydini.common.doamin.entity.BaseEntityModel;
 import org.springframework.security.core.GrantedAuthority;
 
 
@@ -17,7 +18,7 @@ import org.springframework.security.core.GrantedAuthority;
  */
 
 @MappedSuperclass
-public class Role extends BaseEntityModel implements GrantedAuthority
+public class SecRole extends BaseEntityModel implements GrantedAuthority
 {
 
     /**
