@@ -5,7 +5,7 @@ package net.aydini.common.exception;
  * <p>
  * Jul 9, 2020
  */
-public class ServiceException extends RuntimeException {
+public class ServiceException extends CommonException {
 
     /**
      *
