@@ -15,7 +15,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.ConstraintViolationException;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -221,7 +220,7 @@ public abstract class AbstractService<E extends AbstractEntityModel>
             List<javax.persistence.criteria.Order> orderList = new ArrayList<>();
             sort.forEach((s) ->
             {
-                if (StringUtils.isNotEmpty(s.getProperty()))
+                if (s.getProperty() != null && !s.getProperty().isEmpty())
                 {
                     if (s.isAscending())
                     {
