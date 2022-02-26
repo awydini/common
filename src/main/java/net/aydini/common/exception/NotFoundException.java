@@ -27,4 +27,9 @@ public class NotFoundException extends CommonException{
     {
         super(message);
     }
+
+    public NotFoundException()
+    {
+        super();
+    }
 }
