@@ -11,5 +11,5 @@ import net.aydini.common.exception.ValidationException;
 public interface ArgumentValidator<T>
 {
 
-    public boolean isValid(T ... t) throws ValidationException;
+    boolean isValid(T ... t) throws ValidationException;
 }
