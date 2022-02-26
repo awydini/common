@@ -1,5 +1,8 @@
 package net.aydini.common.util;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -12,75 +15,41 @@ import java.util.Date;
 public class DateUtils
 {
 
-    public static DateUtils dateUtils;
-    
-    
-    public static DateUtils getInstance()
+    public static LocalDateTime dateToLocalDateTime(Date date)
     {
-        if(dateUtils == null)
-            dateUtils = new DateUtils();
-        return dateUtils;
+        return Instant.ofEpochMilli(date.getTime())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
     }
-    
-    private Calendar getCalendar(Date date)
+
+
+    public static Date localDateTimeToDate(LocalDateTime localDateTime)
     {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        
-        return calendar;
+        return Date.from(localDateTime
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
     }
-    
-    public Date subtractyear(Date date , int number)
+
+
+    public Date addtYear(Date date , int number)
     {
-        Calendar calendar = getCalendar(date);
-        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) - number);
-        
-        return calendar.getTime();
+        return localDateTimeToDate(dateToLocalDateTime(date).plusYears(number));
+
+
     }
-    
-    public Date addYear(Date date , int number)
-    {
-        Calendar calendar = getCalendar(date);
-        calendar.set(Calendar.YEAR, calendar.get(Calendar.YEAR) + number);
-        
-        return calendar.getTime();
-    }
-    
-    
-    public Date subtractMonth(Date date , int number)
-    {
-        Calendar calendar = getCalendar(date);
-        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - number);
-        
-        return calendar.getTime();
-    }
-    
+
     
     public Date addMonth(Date date , int number)
     {
-        Calendar calendar = getCalendar(date);
-        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + number);
-        
-        return calendar.getTime();
+        return localDateTimeToDate(dateToLocalDateTime(date).plusMonths(number));
     }
     
+
     
     public Date addDay(Date date , int number)
     {
-        Calendar calendar = getCalendar(date);
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + number);
-        
-        return calendar.getTime();
+        return localDateTimeToDate(dateToLocalDateTime(date).plusDays(number));
     }
-    
-    
-    public Date subtractDay(Date date , int number)
-    {
-        Calendar calendar = getCalendar(date);
-        calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) - number);
-        
-        return calendar.getTime();
-    }
-    
+
     
 }
