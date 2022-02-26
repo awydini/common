@@ -1,8 +1,7 @@
-package net.aydini.common.string.controller.validator;
+package net.aydini.common.string.validator;
 
 import net.aydini.common.exception.ValidationException;
 import net.aydini.common.validator.EmailValidator;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
