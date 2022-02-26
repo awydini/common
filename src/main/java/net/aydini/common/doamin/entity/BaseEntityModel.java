@@ -26,19 +26,15 @@ public abstract class BaseEntityModel extends AbstractEntityModel
     
     
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", nullable = true)
+    @JoinColumn(name = "created_by")
     @CreatedBy
     private SecUser createdBy;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "updated_by", nullable = true)
+    @JoinColumn(name = "updated_by")
     @LastModifiedBy
     private SecUser updatedBy;
-    
-   
-    
 
-   
     
     public SecUser getCreatedBy()
     {
