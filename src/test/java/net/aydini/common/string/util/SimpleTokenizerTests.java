@@ -1,4 +1,4 @@
-package net.aydini.common.string;
+package net.aydini.common.string.util;
 
 import net.aydini.common.util.SimpleTokenizer;
 import org.junit.jupiter.api.BeforeAll;
