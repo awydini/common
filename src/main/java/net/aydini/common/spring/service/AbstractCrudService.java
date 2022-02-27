@@ -141,12 +141,18 @@ public abstract class AbstractCrudService<E extends AbstractEntityModel>
     @Transactional(readOnly = true)
     public E findById( Object id)
     {
-        return getEntityManager().find(entityType, id);
+        E entity = getEntityManager().find(entityType, id);
+        if(entity == null)
+            throw new NotFoundException(NotFoundException.DATA_WITH_ID_NOT_FOUND + id);
+        return entity;
     }
 
     public Page<E> findAll(Pageable pageable)
     {
-        return getDao().findAll(pageable);
+        Page<E> page = getDao().findAll(pageable);
+        if(page==null || page.getContent() == null || page.getContent().isEmpty())
+            throw new NotFoundException(NotFoundException.NOT_FOUND);
+        return page;
     }
 
 
