@@ -32,7 +32,7 @@ public class ResponseError extends ResponseMessage{
     public ResponseError(String message, Integer code, String ... errors)
     {
         super(message, code);
-        this.errors = errors != null ? Arrays.asList(errors) : new ArrayList<>();
+        this.errors = errors != null ? List.of(errors) : new ArrayList<>();
     }
 
 

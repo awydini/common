@@ -2,14 +2,7 @@ package net.aydini.common.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -62,7 +55,7 @@ public class SimpleTokenizer implements Enumeration<String> {
     public SimpleTokenizer(String source, String delimiter, String filterRegex) {
         position = 0;
         delimiter = delimiter != null ? delimiter : EMPTY_STRING;
-        tokens = new ArrayList<String>(Arrays.asList(source.split(delimiter)));
+        tokens = new ArrayList<String>(List.of(source.split(delimiter)));
         filterTokens(filterRegex);
         maxPosition = tokens.size();
     }
@@ -111,7 +104,7 @@ public class SimpleTokenizer implements Enumeration<String> {
     {
         if(names == null || names.length == 0)
             throw new IllegalArgumentException();
-        if((new HashSet<String>(Arrays.asList(names))).size() != names.length)
+        if((new HashSet<String>(List.of(names))).size() != names.length)
             throw new IllegalArgumentException();
         if(names.length != tokens.size())
             throw new IllegalArgumentException();

@@ -1,8 +1,4 @@
 package net.aydini.common.string.controller;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import net.aydini.common.constant.Constants;
 import net.aydini.common.controller.ControllerExceptionHandler;
@@ -19,7 +15,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.WebRequest;
 
-import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 
 /**
@@ -43,7 +44,7 @@ public class ControllerExceptionHandlerTests {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set(Constants.TRACK_CODE_HEADER,trackCode);
         when(webRequest.getHeader(Constants.TRACK_CODE_HEADER)).thenReturn(httpHeaders.getFirst(Constants.TRACK_CODE_HEADER));
-        when(webRequest.getHeaderNames()).thenReturn(Arrays.asList(Constants.TRACK_CODE_HEADER).iterator());
+        when(webRequest.getHeaderNames()).thenReturn(List.of(Constants.TRACK_CODE_HEADER).iterator());
         when(webRequest.getHeaderValues(Constants.TRACK_CODE_HEADER)).thenReturn(new String[]{trackCode});
         controllerExceptionHandler = new ControllerExceptionHandler() {
             @Override

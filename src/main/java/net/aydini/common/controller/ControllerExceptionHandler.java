@@ -1,7 +1,4 @@
 package net.aydini.common.controller;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import net.aydini.common.doamin.dto.web.ResponseError;
 import net.aydini.common.exception.NotFoundException;
@@ -19,6 +16,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.util.WebUtils;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -155,7 +155,7 @@ public abstract class ControllerExceptionHandler  extends ResponseEntityExceptio
         HttpHeaders httpHeaders = new HttpHeaders();
         if(webRequest == null || webRequest.getHeaderNames() == null)
             return httpHeaders;
-       webRequest.getHeaderNames().forEachRemaining(headerName->httpHeaders.addAll(headerName, Arrays.asList(webRequest.getHeaderValues(headerName))));
+       webRequest.getHeaderNames().forEachRemaining(headerName->httpHeaders.addAll(headerName, List.of(webRequest.getHeaderValues(headerName))));
         return httpHeaders;
     }
 }
