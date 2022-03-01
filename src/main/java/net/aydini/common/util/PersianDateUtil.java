@@ -18,7 +18,9 @@ public class PersianDateUtil
 
     private final static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
-
+    public static void main(String[] args) {
+        System.out.println(toGregorian("13470801",null));
+    }
     public static String toJalaliDate(LocalDate date,DateTimeFormatter formatter)
     {
         if(formatter==null)

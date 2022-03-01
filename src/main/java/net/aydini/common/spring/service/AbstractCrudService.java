@@ -14,7 +14,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.lang.reflect.ParameterizedType;
@@ -34,16 +33,9 @@ public abstract class AbstractCrudService<E extends AbstractEntityModel>
     private static final Logger log = LoggerFactory.getLogger(AbstractCrudService.class.getName());
 
 
-    @PersistenceContext(unitName = "entityManagerFactory")
-    protected EntityManager entityManager;
+    protected abstract BaseDao<E> getDao();
 
-
-    public abstract BaseDao<E> getDao();
-
-    protected EntityManager getEntityManager()
-    {
-        return entityManager;
-    }
+    protected abstract EntityManager getEntityManager();
 
     private final Class<E> entityType;
 
@@ -170,14 +162,14 @@ public abstract class AbstractCrudService<E extends AbstractEntityModel>
         if(count ==null || count.longValue()==0l)
             throw new NotFoundException();
 
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<E> criteria = builder.createQuery(entityType);
         Root<E> root = criteria.from(entityType);
         criteria.select(root);
         setRestriction(restriction,builder,criteria,root);
         criteria.orderBy(getOrders(sort,builder,root));
 
-        TypedQuery<E> typedQuery = entityManager.createQuery(criteria);
+        TypedQuery<E> typedQuery = getEntityManager().createQuery(criteria);
         typedQuery.setFirstResult((int) pageable.getOffset());
         typedQuery.setMaxResults(pageable.getPageSize());
 
@@ -191,12 +183,12 @@ public abstract class AbstractCrudService<E extends AbstractEntityModel>
     @Transactional(readOnly = true)
     public Long count( JPARestriction restriction)
     {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
         Root<E> root = criteria.from(entityType);
         criteria.select(builder.count(root));
         setRestriction(restriction,builder,criteria,root);
-        return entityManager.createQuery(criteria).getSingleResult();
+        return getEntityManager().createQuery(criteria).getSingleResult();
     }
 
 
