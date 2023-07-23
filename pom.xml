@@ -19,7 +19,7 @@
         <junit.version>5.6.2</junit.version>
         <jackson.version>2.11.4</jackson.version>
         <spring.version>5.3.16</spring.version>
-        <spring.security.version>5.6.2</spring.security.version>
+        <spring.security.version>5.6.9</spring.security.version>
         <hibernate.version>5.4.27.Final</hibernate.version>
         <spring.data.jpa.version>2.4.2</spring.data.jpa.version>
         <feign.version>11.8</feign.version>
